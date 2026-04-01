@@ -1,109 +1,820 @@
- <!DOCTYPE html>
-<html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
   <title>Yuriy Dementiev</title>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lux/bootstrap.min.css">
-  <link href="https://fonts-online.ru/fonts/akrobat" rel="stylesheet">
-<!--   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R1CTS15ZE0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-R1CTS15ZE0');
+  </script>
 
   <style>
-    body {
-        font: 16px Acrobat, sans-serif;
-        line-height: 1.8;
-        color: #333230;
-        max-width: 700px;
-        margin: auto
+    :root {
+      --bg: #F7F5F0;
+      --bg-card: #FFFFFF;
+      --text: #1A1916;
+      --text-muted: #6B6860;
+      --text-light: #9B9890;
+      --accent: #2A4A7F;
+      --accent-light: #D6E1F0;
+      --border: #E0DDD6;
+      --border-strong: #C5C1BA;
+      --tag-bg: #EDE9E2;
+      --serif: 'EB Garamond', Georgia, serif;
+      --mono: 'DM Mono', monospace;
     }
 
-    img {
-      height: 40px;
-      margin: 5px;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--serif);
+      font-size: 18px;
+      line-height: 1.75;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
     }
+
+    /* Layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Header */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 3.5rem 0 3rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .header-inner {
+      display: flex;
+      gap: 2.5rem;
+      align-items: flex-start;
+    }
+
+    .header-photo {
+      flex-shrink: 0;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--border);
+      filter: grayscale(15%);
+    }
+
+    .header-text {
+      flex: 1;
+      padding-top: 0.4rem;
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: 2.4rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 0.6rem;
+    }
+
+    .tagline {
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-bottom: 1rem;
+      letter-spacing: 0.01em;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-row a, .contact-row span {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+    .contact-row a:hover { color: var(--accent); }
+
+    .btn-cv {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.35rem 0.9rem;
+      border-radius: 2px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-cv:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* Nav tabs */
+    .nav {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+
+    .nav button {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 0.7rem 1.3rem 0.6rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+      margin-bottom: -1px;
+    }
+    .nav button:hover { color: var(--text); }
+    .nav button.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* Sections */
+    .section {
+      display: none;
+      animation: fadein 0.25s ease;
+    }
+    .section.active { display: block; }
+
+    @keyframes fadein {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Section headings */
+    h2 {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .block { margin-bottom: 3rem; }
+
+    /* Research interests */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      background: var(--tag-bg);
+      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      letter-spacing: 0.02em;
+    }
+
+    /* Positions table */
+    .entries { display: flex; flex-direction: column; gap: 0; }
+
+    .entry {
+      display: flex;
+      gap: 1.5rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+    .entry:last-child { border-bottom: none; }
+
+    .entry-logo {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      filter: grayscale(100%);
+      opacity: 0.65;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .entry-logo-placeholder {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      background: var(--tag-bg);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--text-light);
+    }
+
+    .entry-body {}
+    .entry-role {
+      font-size: 1rem;
+      color: var(--text);
+      line-height: 1.4;
+    }
+    .entry-role a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid var(--border-strong);
+      transition: border-color 0.2s;
+    }
+    .entry-role a:hover { border-color: var(--accent); color: var(--accent); }
+
+    .entry-meta {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-light);
+      letter-spacing: 0.03em;
+      margin-top: 0.15rem;
+    }
+
+    /* Publications */
+    .pub-links { display: flex; gap: 0.8rem; margin-top: 0.3rem; }
+    .pub-link {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent-light);
+      transition: border-color 0.2s;
+    }
+    .pub-link:hover { border-color: var(--accent); }
+
+    /* Teaching */
+    .course {
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .course:last-child { border-bottom: none; }
+    .course-title {
+      font-size: 1rem;
+      color: var(--text);
+      line-height: 1.4;
+    }
+    .course-meta {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-light);
+      letter-spacing: 0.03em;
+      margin-top: 0.1rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0 3rem;
+      margin-top: 4rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-light);
+      letter-spacing: 0.04em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .header-inner { flex-direction: column; align-items: center; text-align: center; }
+      .contact-row { justify-content: center; }
+      h1 { font-size: 2rem; }
+      .page { padding: 0 1.2rem; }
+      .nav button { padding: 0.7rem 0.8rem 0.6rem; font-size: 0.68rem; }
+    }
+    .client-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+      margin-top: 1rem;
+    }
+
+    .client-card {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg-card);
+      transition: border-color 0.2s;
+    }
+    .client-card:hover { border-color: var(--border-strong); }
+
+    .client-logo-placeholder {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      font-weight: 500;
+      height: 36px;
+      display: flex;
+      align-items: center;
+    }
+
+    .client-desc {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--text-light);
+      letter-spacing: 0.03em;
+      text-align: center;
+    }
+
+    .client-card--add {
+      border-style: dashed;
+    }
+
+    /* Publications */
+    .pub-filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .pf-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 0.3rem 0.75rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.03em;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .pf-btn:hover { background: var(--tag-bg); color: var(--text); }
+    .pf-btn.active { background: var(--tag-bg); color: var(--text); border-color: var(--border-strong); }
+
+    .topic-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .topic-dot.algo, .topic-badge.algo { --tc: #2A6B4A; --tbg: #D6EEE0; }
+    .topic-dot.param, .topic-badge.param { --tc: #2A4A7F; --tbg: #D6E1F0; }
+    .topic-dot.game, .topic-badge.game { --tc: #7A3A1A; --tbg: #F5E0D0; }
+    .topic-dot.comm, .topic-badge.comm { --tc: #5A2A7A; --tbg: #EAD6F5; }
+    .topic-dot { background: var(--tc); }
+
+    .pub-list { display: flex; flex-direction: column; gap: 0; }
+
+    .pub-card {
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: opacity 0.2s;
+    }
+    .pub-card:last-child { border-bottom: none; }
+    .pub-card.hidden { display: none; }
+
+    .pub-topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .topic-badge {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.04em;
+      padding: 0.18rem 0.55rem;
+      border-radius: 2px;
+      background: var(--tbg);
+      color: var(--tc);
+      border: 1px solid color-mix(in srgb, var(--tc) 20%, transparent);
+    }
+
+    .pub-title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.45;
+      margin-bottom: 0.25rem;
+    }
+
+    .pub-authors {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-style: italic;
+      line-height: 1.5;
+      margin-bottom: 0.2rem;
+    }
+
+    .pub-venue {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      color: var(--text-light);
+      margin-bottom: 0.6rem;
+    }
+
+    .pub-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; }
+
+    .pub-link {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      color: var(--accent);
+      border-bottom: 1px solid var(--accent-light);
+      transition: border-color 0.2s;
+      cursor: pointer;
+    }
+    .pub-link:hover { border-color: var(--accent); }
+    .pub-link.placeholder {
+      color: var(--text-light);
+      border-bottom-color: var(--border);
+      cursor: default;
+      pointer-events: none;
+    }
+    .pub-link.ext {
+      color: var(--text-muted);
+      border-bottom-color: var(--border);
+    }
+    .pub-link.ext:hover { color: var(--accent); border-color: var(--accent-light); }
+
   </style>
 </head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R1CTS15ZE0"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-R1CTS15ZE0');
-</script>
 <body>
 
-<div class="container">
-   <img style="float: right; margin: 10px; height: 200px; border-radius: 15pt" src="images/IMG_1123.jpg">
-<!--    <p><a href="files/CV.pdf">CV</a></p> -->
-  <br><br>
-  <h2>Yuriy Dementiev</h2>
-  <p>yuru.dementiev@gmail.com</p>
- <p><a href="https://t.me/yurudem">Telegram</a></p>
-  <p><a href="files/CV_2.pdf">CV</a></p>
-<!--   <p><a href="files/CV.pdf">CV</a></p> -->
+<div class="page">
+  <header>
+    <div class="header-inner">
+      <img class="header-photo" src="images/IMG_1123.jpg" alt="Yuriy Dementiev">
+      <div class="header-text">
+        <h1>Yuriy Dementiev</h1>
+        <p class="tagline">Theoretical Computer Scientist · Algorithms &amp; Complexity</p>
+        <div class="contact-row">
+          <a href="/cdn-cgi/l/email-protection#3d44484f481359585058534954584b7d5a505c5451135e5250"><span class="__cf_email__" data-cfemail="9be2eee9eeb5fffef6fef5eff2feeddbfcf6faf2f7b5f8f4f6">[email&#160;protected]</span></a>
+          <a href="https://t.me/yurudem">Telegram</a>
+          <a href="https://dblp.org/pid/272/6226.html">DBLP</a>
+          <a href="https://scholar.google.com/citations?user=FuMqgPcAAAAJ&hl=en">Scholar</a>
+        </div>
+        <a class="btn-cv" href="files/CV_2.pdf">Download CV ↓</a>
+      </div>
+    </div>
+  </header>
 
-  <h4>Research Interests</h4>
-  <ul>
-    <li>Algorithms</li>
-    <li>Parameterized Complexity</li>
-    <li>Algorithmic Game Theory</li>
-    <li>Communication Complexity</li>
-  </ul>
-  <br><br>
- 
-  <h4>Current Positions</h4>
-  <table>
-    <tbody><tr><td></td><td><a href="https://iai.itmo.ru"> ITMO University</a>, Head of TCS Lab</td></tr>
-     <tr><td></td><td><a href="https://vmire">VMIRE</a>, Head of Analytics and Data Science</td>
-      <tr><td></td><td><a href="https://spbu.ru">St.&nbsp;Petersburg State University</a>, Researcher</td>
-    <tr><td></td><td><a href="https://eimi.ru">Leonhard Euler International Mathematical Institute</a>, Researcher</td>
-  </tr></tbody></table>
-  <br>
+  <nav class="nav">
+    <button class="active" onclick="show('about', this)">About</button>
+    <button onclick="show('publications', this)">Publications</button>
+    <button onclick="show('teaching', this)">Teaching</button>
+    <button onclick="show('projects', this)">Projects</button>
+    <button onclick="show('visits', this)">Visits</button>
+  </nav>
 
- <h4>Past Positions</h4>
-  <table>
-    <tbody><tr><td><img src="images/mygames.avif"></td><td><a href="https://my.games/about#">MY.GAMES</a>, Data Analyst</td>
-     <tr><td><img src="images/hse.svg"></td><td><a href="https://game.hse.ru">HSE University</a>, Researcher</td>
-  </tr></tbody></table>
-  <br>
+  <!-- About -->
+  <section id="about" class="section active">
 
-  <h4>Education</h4>
-  <table>
-    <tbody><tr><td><img src="images/pdmi.png"></td><td>Ph.D.:  2024 - 2028, PDMI RAS</td></tr>
-     <tr><td><img src="images/spbu_grey.png"></td><td>M.Sc.:  2022 - 2024, St.&nbsp;Petersburg State University</td></tr>
-    <tr><td><img src="images/spbu_grey.png"></td><td>B.Sc.:  2018 - 2022, St.&nbsp;Petersburg State University</td></tr>
-  </tbody></table>
-  <br>
+    <div class="block">
+      <h2>Research Interests</h2>
+      <div class="tags">
+        <span class="tag">Algorithms</span>
+        <span class="tag">Parameterized Complexity</span>
+        <span class="tag">Algorithmic Game Theory</span>
+        <span class="tag">Communication Complexity</span>
+      </div>
+    </div>
 
-  <h4 id="publications">Publications</h4>
-  <table>
-    <tbody><tr><td><img src="images/dblp.png"></td><td><a href="https://dblp.org/pid/272/6226.html">DBLP</a></td></tr>
-    <tr><td><img src="images/shcolar.png"></td><td><a href="https://scholar.google.com/citations?user=FuMqgPcAAAAJ&hl=en">Google Scholar</a></td></tr>
-  </tbody></table>
-  <br>
-  
-  <h4>Teaching</h4>
-  <ul>
-   <li>Algorithms for NP-hard problems<br>
-    2025, ITMO University</li>
-    <li>Information Theory (in Russian)<br>
-    2024, St. Petersburg State University</li>
-    <li>Parameterized Algorithms, seminar (in Russian)<br>
-    2023, St. Petersburg State University</li>
-    <li>Mathematical foundations of algorithms (in Russian)<br>
-    2023, St. Petersburg State University</li>
-  </ul>
-  
-  <h4>Research Visits</h4>
-  <table>
-    <tbody><tr><td><img src="images/itcs.png"></td><td><a href="https://itcs.sufe.edu.cn">ITCS</a>, Shanghai University of Finance and Economics<br>
-     Oct.-Dec. 2023, Host: Nick Gravin
-    </td></tr>
-  </tbody></table>
-  <br>
-  
+    <div class="block">
+      <h2>Current Positions</h2>
+      <div class="entries">
+        <div class="entry">
+          <div class="entry-logo-placeholder">ITMO</div>
+          <div class="entry-body">
+            <div class="entry-role"><a href="https://iai.itmo.ru">ITMO University</a></div>
+            <div class="entry-meta">Head of TCS Lab</div>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="entry-logo-placeholder">VM</div>
+          <div class="entry-body">
+            <div class="entry-role"><a href="https://vmire">VMIRE</a></div>
+            <div class="entry-meta">Head of Analytics and Data Science</div>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="entry-logo-placeholder">SPbU</div>
+          <div class="entry-body">
+            <div class="entry-role"><a href="https://spbu.ru">St. Petersburg State University</a></div>
+            <div class="entry-meta">Researcher</div>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="entry-logo-placeholder">EIMI</div>
+          <div class="entry-body">
+            <div class="entry-role"><a href="https://eimi.ru">Leonhard Euler International Mathematical Institute</a></div>
+            <div class="entry-meta">Researcher</div>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="entry-logo-placeholder">CS</div>
+          <div class="entry-body">
+            <div class="entry-role"><a href="https://csspace.io">CS Space</a></div>
+            <div class="entry-meta">Co-founder · Open Computer Science community — courses, lectures, competitions</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h2>Past Positions</h2>
+      <div class="entries">
+        <div class="entry">
+          <img class="entry-logo" src="images/mygames.avif" alt="MY.GAMES">
+          <div class="entry-body">
+            <div class="entry-role"><a href="https://my.games/about#">MY.GAMES</a></div>
+            <div class="entry-meta">Data Analyst</div>
+          </div>
+        </div>
+        <div class="entry">
+          <img class="entry-logo" src="images/hse.svg" alt="HSE">
+          <div class="entry-body">
+            <div class="entry-role"><a href="https://game.hse.ru">HSE University</a></div>
+            <div class="entry-meta">Researcher</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h2>Education</h2>
+      <div class="entries">
+        <div class="entry">
+          <img class="entry-logo" src="images/pdmi.png" alt="PDMI RAS">
+          <div class="entry-body">
+            <div class="entry-role">Ph.D. — PDMI RAS</div>
+            <div class="entry-meta">2024 – 2028</div>
+          </div>
+        </div>
+        <div class="entry">
+          <img class="entry-logo" src="images/spbu_grey.png" alt="SPbU">
+          <div class="entry-body">
+            <div class="entry-role">M.Sc. — St. Petersburg State University</div>
+            <div class="entry-meta">2022 – 2024</div>
+          </div>
+        </div>
+        <div class="entry">
+          <img class="entry-logo" src="images/spbu_grey.png" alt="SPbU">
+          <div class="entry-body">
+            <div class="entry-role">B.Sc. — St. Petersburg State University</div>
+            <div class="entry-meta">2018 – 2022</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Publications -->
+  <section id="publications" class="section">
+
+    <div class="block">
+      <h2>Highlight Publications</h2>
+
+      <div class="pub-filter-row">
+        <button class="pf-btn active" onclick="filterPubs('all', this)">All</button>
+        <button class="pf-btn" onclick="filterPubs('algo', this)">
+          <span class="topic-dot algo"></span>Algorithms
+        </button>
+        <button class="pf-btn" onclick="filterPubs('param', this)">
+          <span class="topic-dot param"></span>Param. Complexity
+        </button>
+        <button class="pf-btn" onclick="filterPubs('game', this)">
+          <span class="topic-dot game"></span>Algorithmic Game Theory
+        </button>
+        <button class="pf-btn" onclick="filterPubs('comm', this)">
+          <span class="topic-dot comm"></span>Comm. Complexity
+        </button>
+      </div>
+
+      <div class="pub-list" id="pub-list">
+
+        <!-- Paper 1 -->
+        <div class="pub-card" data-topics="game param">
+          <div class="pub-topics">
+            <span class="topic-badge game">Algorithmic Game Theory</span>
+            <span class="topic-badge param">Param. Complexity</span>
+          </div>
+          <div class="pub-title">
+            How to Guide a Present-Biased Agent Through Prescribed Tasks?
+          </div>
+          <div class="pub-authors">Tatiana Belova, Yuriy Dementiev, Fedor V. Fomin, Petr A. Golovach, Artur Ignatiev</div>
+          <div class="pub-venue">ECAI 2024</div>
+          <div class="pub-links">
+            <a class="pub-link" href="#" title="PDF" data-type="pdf">PDF</a>
+            <a class="pub-link placeholder" href="#" title="Slides" data-type="slides">Slides</a>
+            <a class="pub-link placeholder" href="#" title="Talk" data-type="talk">Talk</a>
+            <a class="pub-link ext" href="https://dblp.org/rec/conf/ecai/BelovaDFGI24.html" target="_blank">DBLP ↗</a>
+          </div>
+        </div>
+
+        <!-- Paper 2 -->
+        <div class="pub-card" data-topics="game algo">
+          <div class="pub-topics">
+            <span class="topic-badge game">Algorithmic Game Theory</span>
+            <span class="topic-badge algo">Algorithms</span>
+          </div>
+          <div class="pub-title">
+            Inconsistent Planning: When in Doubt, Toss a Coin!
+          </div>
+          <div class="pub-authors">Yuriy Dementiev, Fedor V. Fomin, Artur Ignatiev</div>
+          <div class="pub-venue">AAAI 2022</div>
+          <div class="pub-links">
+            <a class="pub-link placeholder" href="#" title="PDF" data-type="pdf">PDF</a>
+            <a class="pub-link placeholder" href="#" title="Slides" data-type="slides">Slides</a>
+            <a class="pub-link placeholder" href="#" title="Talk" data-type="talk">Talk</a>
+            <a class="pub-link ext" href="https://dblp.org/rec/conf/aaai/DementievFI22.html" target="_blank">DBLP ↗</a>
+          </div>
+        </div>
+
+        <!-- Paper 3 -->
+        <div class="pub-card" data-topics="comm algo">
+          <div class="pub-topics">
+            <span class="topic-badge comm">Comm. Complexity</span>
+            <span class="topic-badge algo">Algorithms</span>
+          </div>
+          <div class="pub-title">
+            New Bounds on the Half-Duplex Communication Complexity
+          </div>
+          <div class="pub-authors">Yuriy Dementiev, Artur Ignatiev, Vyacheslav Sidelnik, Alexander Smal, Mikhail Ushakov</div>
+          <div class="pub-venue">SOFSEM 2021</div>
+          <div class="pub-links">
+            <a class="pub-link placeholder" href="#" title="PDF" data-type="pdf">PDF</a>
+            <a class="pub-link placeholder" href="#" title="Slides" data-type="slides">Slides</a>
+            <a class="pub-link placeholder" href="#" title="Talk" data-type="talk">Talk</a>
+            <a class="pub-link ext" href="https://dblp.org/rec/conf/sofsem/DementievISSU21.html" target="_blank">DBLP ↗</a>
+          </div>
+        </div>
+
+      </div>
+
+      <p style="font-size:0.78rem; color:var(--text-light); font-family:var(--mono); margin-top:1.5rem; letter-spacing:0.03em;">
+        Full list →
+        <a href="https://dblp.org/pid/272/6226.html" style="color:var(--accent);">DBLP</a> ·
+        <a href="https://scholar.google.com/citations?user=FuMqgPcAAAAJ&hl=en" style="color:var(--accent);">Google Scholar</a>
+      </p>
+    </div>
+
+  </section>
+
+  <!-- Teaching -->
+  <section id="teaching" class="section">
+    <div class="block">
+      <h2>Courses</h2>
+      <div>
+        <div class="course">
+          <div class="course-title">Algorithms for NP-hard Problems</div>
+          <div class="course-meta">2025 · ITMO University</div>
+        </div>
+        <div class="course">
+          <div class="course-title">Information Theory <span style="opacity:0.6">(in Russian)</span></div>
+          <div class="course-meta">2024 · St. Petersburg State University</div>
+        </div>
+        <div class="course">
+          <div class="course-title">Parameterized Algorithms, seminar <span style="opacity:0.6">(in Russian)</span></div>
+          <div class="course-meta">2023 · St. Petersburg State University</div>
+        </div>
+        <div class="course">
+          <div class="course-title">Mathematical Foundations of Algorithms <span style="opacity:0.6">(in Russian)</span></div>
+          <div class="course-meta">2023 · St. Petersburg State University</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="section">
+
+    <div class="block">
+      <h2>Ventures &amp; Products</h2>
+      <div class="entries">
+
+        <div class="entry">
+          <div class="entry-logo-placeholder">CS</div>
+          <div class="entry-body">
+            <div class="entry-role"><a href="https://csspace.io">CS Space</a></div>
+            <div class="entry-meta" style="margin-top:0.2rem;">Co-founder · 2025 – present</div>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-top:0.5rem; line-height:1.6;">
+              Open Computer Science community based in St. Petersburg.
+              Runs courses, open lectures, and programming competitions —
+              hosted at PDMI RAS and partner venues, as well as online.
+              20+ instructors, 15+ open lectures, 6+ specialised courses launched to date.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="block">
+      <h2>Clients &amp; Collaborations</h2>
+      <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.7; margin-bottom:1rem;">
+        Delivered data analytics and ML projects for technology companies across gaming, finance, and software.
+        Full product-cycle experience: scoping, team building, architecture, and delivery.
+      </p>
+      <div class="client-grid">
+        <div class="client-card">
+          <div class="client-logo-placeholder">MY.GAMES</div>
+          <div class="client-desc">Data analytics</div>
+        </div>
+        <div class="client-card client-card--add">
+          <div class="client-logo-placeholder" style="opacity:0.35;">+ more</div>
+          <div class="client-desc" style="opacity:0.4;">Logos coming soon</div>
+        </div>
+      </div>
+      <p style="font-size:0.78rem; color:var(--text-light); font-family:var(--mono); margin-top:1.2rem; letter-spacing:0.03em;">
+        Full client list available on request or in the CV.
+      </p>
+    </div>
+
+  </section>
+
+  <!-- Research Visits -->
+
+  <section id="visits" class="section">
+    <div class="block">
+      <h2>Research Visits</h2>
+      <div class="entries">
+        <div class="entry">
+          <img class="entry-logo" src="images/itcs.png" alt="ITCS">
+          <div class="entry-body">
+            <div class="entry-role">
+              <a href="https://itcs.sufe.edu.cn">Institute for Theoretical Computer Science (ITCS)</a>,<br>
+              Shanghai University of Finance and Economics
+            </div>
+            <div class="entry-meta">Oct. – Dec. 2023 · Host: Nick Gravin</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Yuriy Dementiev</span>
+    <span>St. Petersburg · Shanghai · Frankfurt</span>
+  </footer>
 </div>
 
+<script>
+  function show(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
 
-
-</body></html>
+  function filterPubs(topic, btn) {
+    document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.pub-card').forEach(card => {
+      if (topic === 'all') {
+        card.classList.remove('hidden');
+      } else {
+        const topics = card.dataset.topics || '';
+        card.classList.toggle('hidden', !topics.split(' ').includes(topic));
+      }
+    });
+  }
+</script>
+</body>
+</html>
